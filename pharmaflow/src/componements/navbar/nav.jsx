@@ -17,7 +17,7 @@ const Nav= ({setPage}) => {
     {
         setActiveLink(linkName);
         setPage(linkName);
-        navigate(linkName);
+        navigate(paths[linkName]);
         console.log(linkName);
         
     };
