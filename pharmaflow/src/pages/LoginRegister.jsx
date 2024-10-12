@@ -26,7 +26,7 @@ const Button = ({ children, onClick, className }) => (
   </button>
 );
 
-const LoginPage = (setState) => {
+const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -76,10 +76,10 @@ const LoginPage = (setState) => {
             Log In
           </Button>
         </form>
-        <div onClick={()=>{setState('register')}} className="mt-4 text-center">
+        <div  className="mt-4 text-center">
           <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
           <br/>
-          <a onClick={()=>{setState('register')}} className="text-sm text-blue-600 hover:underline">Create an account?</a>
+          <a  className="text-sm text-blue-600 hover:underline">Create an account?</a>
         </div>
       </Card>
     </div>

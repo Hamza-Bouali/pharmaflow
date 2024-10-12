@@ -5,38 +5,35 @@ import StockForecasting from './pages/StockForecasting';
 import UserManagement from './pages/UserManagement';
 import React,{useState} from 'react';
 import OrderManagement from './pages/OrderManagement';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Reports from './pages/Reports';
 import LoginPage from './pages/LoginRegister';
 const App=()=>{
     let [page,setPage]=useState('Login');
     let [state,setState]=useState('login');
     
-    const renderPage = () => {
-        switch (page) {
-            case 'Dashboard':
-                return <Dashboard />;
-            case 'Inventory Management':
-                return <Inventory />;
-            case 'Stock Forecasting':
-                return <StockForecasting />;
-            case 'Order Management':
-                return <OrderManagement />;
-            case 'Reports':
-                return <Reports />;
-            case 'Settings':
-                return <UserManagement />;
-            default:
-                return <LoginPage  setState={setState} />;
-        }
-    };
+    
 
 
     return (
         <>
+        <Router>
         <Nav setPage={setPage}/>
-        {renderPage()}
+        
+        
+          <Routes>
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/forecast" element={<StockForecasting />} />
+            <Route path="/orders" element={<OrderManagement />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/settings" element={<UserManagement />} />
+          </Routes>
+        </Router>
     
-        </>
+    </>        
     )
+    
 }
 export default App;
