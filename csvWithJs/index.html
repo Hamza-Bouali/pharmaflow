@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Read CSV File</title>
+</head>
+<body>
+    <input type="file" id="csvFileInput" accept=".csv" />
+    <table id="csvTable">
+
+    </table>
+    <script>
+        document.getElementById('csvFileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const text = e.target.result;
+                    const rows = text.split('\n').map(row => row.split(','));
+                    const table = document.getElementById('csvTable');
+                    const tablehead= document.createElement('thead');
+                    rows[0].map(cell => {
+                        const th = document.createElement('th');
+                        th.textContent = cell;
+                        tablehead.appendChild(th);
+                    });
+                    table.appendChild(tablehead);
+                    console.log(rows);
+                    rows.slice(1).map(row => {
+                        const tr = document.createElement('tr');
+                        row.map(cell => {
+                            const td = document.createElement('td');
+                            td.textContent = cell;
+                            tr.appendChild(td);
+                        });
+                        table.appendChild(tr);
+                    });
+                };
+                reader.readAsText(file);
+            }
+
+        });
+    </script>
+</body>
+</html>

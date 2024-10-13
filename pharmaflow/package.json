@@ -13,14 +13,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "datamaps": "^0.5.9",
     "heroicons": "^2.1.5",
     "lucide-react": "^0.451.0",
     "papaparse": "^5.4.1",
     "path": "^0.12.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-google-charts": "^5.1.0",
     "react-router-dom": "^6.27.0",
-    "recharts": "^2.13.0"
+    "recharts": "^2.13.0",
+    "powerbi-client-react": "^2.11.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",

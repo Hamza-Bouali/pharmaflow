@@ -3,11 +3,12 @@ import Inventory from './pages/Inventory';
 import Dashboard from './pages/Dashboard';
 import StockForecasting from './pages/StockForecasting';
 import UserManagement from './pages/UserManagement';
+import DropDown from './componements/ui/dropdown';
 import React,{useState} from 'react';
 import OrderManagement from './pages/OrderManagement';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Reports from './pages/Reports';
-import MainPage from './pages/LoginRegister';
+import FinancialReportsPage from './pages/Reports';
+
 import RegisterPage from './pages/LoginRegister';
 const App=()=>{
     let [page,setPage]=useState('Login');
@@ -21,7 +22,7 @@ const App=()=>{
         <Router>
         <Nav setPage={setPage}/>
         
-        <div className="p-6 max-w-6xl mx-auto">
+        <div className="px-20  max-w-10xl mx-auto">
           <Routes>
           
             <Route path="/" element={<RegisterPage setPage={setState}/>} />
@@ -29,7 +30,7 @@ const App=()=>{
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/forecast" element={<StockForecasting />} />
             <Route path="/orders" element={<OrderManagement />} />
-            <Route path="/reports" element={<Reports />} />
+            <Route path="/reports" element={<FinancialReportsPage />} />
             <Route path="/settings" element={<UserManagement />} />
           
           </Routes>

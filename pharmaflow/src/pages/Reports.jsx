@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FileText, Download, Search, Filter, ChevronDown, ChevronUp, ChevronLeft, ChevronRight } from 'lucide-react';
 
+
 const Card = ({ title, value, icon: Icon, change }) => (
   <div className="bg-white rounded-lg shadow p-6">
     <div className="flex justify-between items-center mb-4">
@@ -38,7 +39,7 @@ const DocumentRow = ({ doc, onDownload }) => (
   </div>
 );
 
-const FinancialReportsPage = () => {
+const ReportPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOrder, setSortOrder] = useState('desc');
   const [filterType, setFilterType] = useState('all');
@@ -151,4 +152,4 @@ const FinancialReportsPage = () => {
   );
 };
 
-export default FinancialReportsPage;
+export default ReportPage;
