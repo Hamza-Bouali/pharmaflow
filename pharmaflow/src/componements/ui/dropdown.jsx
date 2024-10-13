@@ -35,11 +35,11 @@ const DashboardDropdown = ({ options, onSelect }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 relative">
+    <div className="bg-white rounded-lg w-full p-2 relative">
       <div className="relative inline text-left w-full" ref={dropdownRef}>
         <button
           type="button"
-          className="inline-flex justify-between items-center w-full rounded-md border border-white-100 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+          className="inline-flex  justify-between items-center w-full rounded-md  border-white-100 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
           onClick={() => setIsOpen(!isOpen)}
           onKeyDown={handleKeyDown}
         >
