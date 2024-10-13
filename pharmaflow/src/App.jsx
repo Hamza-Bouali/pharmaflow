@@ -3,10 +3,9 @@ import Inventory from './pages/Inventory';
 import Dashboard from './pages/Dashboard';
 import StockForecasting from './pages/StockForecasting';
 import UserManagement from './pages/UserManagement';
-import DropDown from './componements/ui/dropdown';
 import React,{useState} from 'react';
 import OrderManagement from './pages/OrderManagement';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FinancialReportsPage from './pages/Reports';
 
 import RegisterPage from './pages/LoginRegister';
