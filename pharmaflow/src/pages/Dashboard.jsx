@@ -23,6 +23,12 @@ const salesData = [
   { month: 'Jun', sales: 5500 },
 ];
 
+let [TopProduct, setTopProduct] = useState('Product A');
+let [TopProductClass, setTopProductClass] = useState('A');
+let [TopCity, setTopCity] = useState('Los Angeles');
+let [TopSales, setTopSales] = useState(4000);
+
+
 const productData = [
   { name: 'Product A', value: 400 },
   { name: 'Product B', value: 300 },

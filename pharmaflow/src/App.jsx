@@ -7,10 +7,11 @@ import React,{useState} from 'react';
 import OrderManagement from './pages/OrderManagement';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Reports from './pages/Reports';
-import LoginPage from './pages/LoginRegister';
+import MainPage from './pages/LoginRegister';
+import RegisterPage from './pages/LoginRegister';
 const App=()=>{
     let [page,setPage]=useState('Login');
-    let [state,setState]=useState('login');
+    let [state,setState]=useState(false);
     
     
 
@@ -20,16 +21,19 @@ const App=()=>{
         <Router>
         <Nav setPage={setPage}/>
         
-        
+        <div className="p-6 max-w-6xl mx-auto">
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+          
+            <Route path="/" element={<RegisterPage setPage={setState}/>} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/forecast" element={<StockForecasting />} />
             <Route path="/orders" element={<OrderManagement />} />
             <Route path="/reports" element={<Reports />} />
             <Route path="/settings" element={<UserManagement />} />
+          
           </Routes>
+          </div>
         </Router>
     
     </>        

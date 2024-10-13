@@ -17,16 +17,16 @@ const Input = ({ type, placeholder, value, onChange, className }) => (
   />
 );
 
-const Button = ({ children, onClick, className }) => (
+const Button = ({ children, type = 'button', className }) => (
   <button
-    onClick={onClick}
+    type={type}
     className={`py-2 px-4 rounded-md focus:outline-none focus:ring-2 ${className}`}
   >
     {children}
   </button>
 );
 
-const LoginPage = () => {
+const LoginPage = ({ setState }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -35,6 +35,7 @@ const LoginPage = () => {
     // Handle login logic here
     if (!username || !password) {
       alert('Please enter username and password');
+      return;
     }
     if (username === 'admin' && password === 'admin') {
       alert('Logged in successfully');
@@ -46,7 +47,7 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-green-100">
       <Card className="w-full max-w-md p-6">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-blue-700">PharmaFlow <br/>-Login-</h2>
+          <h2 className="text-2xl font-bold text-blue-700">PharmaFlow <br />-Login-</h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="relative">
@@ -70,27 +71,23 @@ const LoginPage = () => {
             />
           </div>
           <Button
-            onClick={handleSubmit}
+            type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white"
           >
             Log In
           </Button>
         </form>
-        <div  className="mt-4 text-center">
+        <div className="mt-4 text-center">
           <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
-          <br/>
-          <a  className="text-sm text-blue-600 hover:underline">Create an account?</a>
+          <br />
+          <a href='#' onClick={() => setState('register')} className="text-sm text-blue-600 hover:underline">Create an account?</a>
         </div>
       </Card>
     </div>
   );
 };
 
-
-
-
-
-const RadioButton = ({ id, name, value, checked, onChange, label, icon: Icon }) => (
+const RadioButton = ({ id, name, value, checked, onChange, label }) => (
   <div className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100">
     <input
       id={id}
@@ -102,13 +99,12 @@ const RadioButton = ({ id, name, value, checked, onChange, label, icon: Icon }) 
       className="form-radio text-blue-600"
     />
     <label htmlFor={id} className="flex items-center cursor-pointer">
-      {Icon && <Icon size={18} className="mr-2 text-gray-600" />}
       <span>{label}</span>
     </label>
   </div>
 );
 
-const RegisterPage = (setState) => {
+const RegisterPage = ({ setState }) => {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -132,7 +128,7 @@ const RegisterPage = (setState) => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-green-100 p-4">
       <Card className="w-full max-w-md p-6">
         <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-blue-700">PharmaCare Registration</h2>
+          <h2 className="text-2xl font-bold text-blue-700">PharmaCare<br/> Registration</h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
@@ -142,7 +138,6 @@ const RegisterPage = (setState) => {
             value={formData.fullName}
             onChange={handleChange}
             className="border-green-300 focus:border-green-500 focus:ring-green-500"
-            icon={User}
           />
           <Input
             type="email"
@@ -151,7 +146,6 @@ const RegisterPage = (setState) => {
             value={formData.email}
             onChange={handleChange}
             className="border-green-300 focus:border-green-500 focus:ring-green-500"
-            icon={Mail}
           />
           <Input
             type="password"
@@ -160,7 +154,6 @@ const RegisterPage = (setState) => {
             value={formData.password}
             onChange={handleChange}
             className="border-green-300 focus:border-green-500 focus:ring-green-500"
-            icon={Lock}
           />
           <Input
             type="password"
@@ -169,7 +162,6 @@ const RegisterPage = (setState) => {
             value={formData.confirmPassword}
             onChange={handleChange}
             className="border-green-300 focus:border-green-500 focus:ring-green-500"
-            icon={Lock}
           />
           <div className="space-y-2">
             <p className="font-semibold text-gray-700">I am registering as a:</p>
@@ -180,7 +172,6 @@ const RegisterPage = (setState) => {
               checked={formData.userType === 'client'}
               onChange={handleChange}
               label="Client"
-              icon={Users}
             />
             <RadioButton
               id="employee"
@@ -189,7 +180,6 @@ const RegisterPage = (setState) => {
               checked={formData.userType === 'employee'}
               onChange={handleChange}
               label="Employee"
-              icon={Briefcase}
             />
             <RadioButton
               id="supplier"
@@ -198,32 +188,30 @@ const RegisterPage = (setState) => {
               checked={formData.userType === 'supplier'}
               onChange={handleChange}
               label="Supplier"
-              icon={Truck}
             />
           </div>
           <Button
-            onClick={handleSubmit}
+            type="submit"
             className="w-full bg-blue-600 hover:bg-blue-700 text-white"
           >
             Register
           </Button>
         </form>
-        <div className="mt-4 text-center" onClick={()=>{setState('login')}}>
-          <a href="#" className="text-sm text-blue-600 hover:underline">Already have an account? Log in</a>
+        <div className="mt-4 text-center">
+          <a href="#" onClick={() => setState('login')} className="text-sm text-blue-600 hover:underline">Already have an account? Log in</a>
         </div>
       </Card>
     </div>
   );
 };
-const MainPage=(setState,state)=>
-{
-    
-  return (<> 
-  {state ==='login'    &&   <LoginPage setState={setState}      />} 
-  {state ==='register' &&   <RegisterPage setState={setState}   />}
-  </>);
 
+const MainPage = ({ setState, state }) => {
+  return (
+    <>
+      {state === 'login' && <LoginPage setState={setState} />}
+      {state === 'register' && <RegisterPage setState={setState} />}
+    </>
+  );
 }
 
-
-export default LoginPage;
+export default RegisterPage;

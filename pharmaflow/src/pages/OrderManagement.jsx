@@ -52,7 +52,7 @@ const OrderManagement = () => {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <>
       <h1 className="text-3xl font-bold mb-6">Order Management</h1>
       
       <div className="mb-6 flex justify-between items-center">
@@ -136,7 +136,7 @@ const OrderManagement = () => {
           </tbody>
         </table>
       </div>
-    </div>
+    </>
   );
 };
 
