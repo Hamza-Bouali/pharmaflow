@@ -21,7 +21,7 @@ const App=()=>{
         <Router>
         <Nav setPage={setPage}/>
         
-        <div className="px-20  max-w-10xl mx-auto">
+        <div className="  max-w-10xl mx-auto">
           <Routes>
           
             <Route path="/" element={<RegisterPage setPage={setState}/>} />
