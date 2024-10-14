@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { Clipboard, TrendingUp, Package, DollarSign, Home } from 'lucide-react';
 import Dropdown from './../componements/ui/dropdown';
+import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
 import { Chart } from 'react-google-charts';
 
 const Card = ({ title, value, icon: Icon, className }) => (
@@ -59,7 +60,7 @@ const productData = [
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
-const MonthlySales = ({ state }) => {
+const MonthlySales = ({ state ,n}) => {
   if (!state) return null;
   return (
     <div className="bg-white rounded-lg shadow p-6">
@@ -78,10 +79,10 @@ const MonthlySales = ({ state }) => {
   );
 };
 
-const YearlySales = ({ state }) => {
+const YearlySales = ({ state ,n}) => {
   if (!state) return null;
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className={`bg-white rounded-lg shadow p-6 lg:col-span-${n}`}>
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Sales Trend</h2>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={salesDataYearly}>
@@ -97,7 +98,7 @@ const YearlySales = ({ state }) => {
   );
 };
 
-const SeasonSales = ({ state }) => {
+const SeasonSales = ({ state,n }) => {
   if (!state) return null;
   return (
     <div className="bg-white rounded-lg shadow p-6">
@@ -146,7 +147,10 @@ const MapChart = () => {
       width="100%"
       height="400px"
       data={data}
-    />
+  >
+    
+    </Chart>
+
   );
 };
 
@@ -155,7 +159,7 @@ const ReportsPage = () => {
   const [topProduct, setTopProduct] = useState('Dollyprane');
   const [periods, setPeriods] = useState({ year: 'all years', month: 'all months', season: 'all seasons' });
   const [visibleComponents, setVisibleComponents] = useState({ year: true, month: true, season: true });
-
+  const [numb, setNumb] = useState(3);
   const years = [
     { label: 'all years', value: 'all years' },
     { label: '2025', value: 2025 },
@@ -197,6 +201,7 @@ const ReportsPage = () => {
   const onPeriodChange = (period, type) => {
     setPeriods(prev => ({ ...prev, [type]: period }));
     setVisibleComponents(prev => ({ ...prev, [type]: period === `all ${type}s` }));
+    visibleComponents.map((item) => {item ? setNumb(numb+1) : setNumb(numb-1)});
   };
 
   const channelSalesData = [
@@ -237,10 +242,10 @@ const ReportsPage = () => {
         <Card title="Top City" value={topCity} icon={Home} />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <YearlySales state={visibleComponents.year} />
-        <MonthlySales state={visibleComponents.month} />
-        <SeasonSales state={visibleComponents.season}/>
-        <div className="bg-white rounded-lg shadow p-6 lg:col-span-1">
+        <YearlySales state={visibleComponents.year}   n={numb} />
+        <MonthlySales state={visibleComponents.month} n={numb}/>
+        <SeasonSales state={visibleComponents.season} n={numb}/>
+        <div className={`bg-white rounded-lg shadow p-6 lg:col-span-2`}>
           <h2 className="text-xl font-semibold text-gray-800 mb-4">Sales by Years & Channels</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={channelSalesData}>

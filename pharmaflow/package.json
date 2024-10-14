@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "d3-scale": "^4.0.2",
     "datamaps": "^0.5.9",
     "heroicons": "^2.1.5",
     "lucide-react": "^0.451.0",
@@ -22,7 +23,8 @@
     "react-dom": "^18.3.1",
     "react-google-charts": "^5.1.0",
     "react-router-dom": "^6.27.0",
-    "react-simple-maps": "^3.0.0",
+    "react-simple-maps": "^1.0.0",
+    "react-tooltip": "^5.28.0",
     "recharts": "^2.13.0"
   },
   "devDependencies": {
