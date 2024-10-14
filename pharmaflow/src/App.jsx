@@ -8,7 +8,9 @@ import OrderManagement from './pages/OrderManagement';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FinancialReportsPage from './pages/Reports';
 import LoginPage from './pages/Login';
+import DashboardDropdown from './componements/ui/dropdown';
 import RegisterPage from './pages/Register';
+import DynamicDashboard from './pages/dynamicDashboard';
 const App=()=>{
     
     let [state,setState]=useState(false);
