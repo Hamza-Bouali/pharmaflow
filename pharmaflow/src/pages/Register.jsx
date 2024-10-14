@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Lock, LogIn, User } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Lock, User } from 'lucide-react';
 
 const Card = ({ children, className }) => (
   <div className={`bg-white shadow-lg rounded-lg ${className}`}>
@@ -26,67 +26,6 @@ const Button = ({ children, type = 'button', className }) => (
   </button>
 );
 
-const LoginPage = ({ setState }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-    if (!username || !password) {
-      alert('Please enter username and password');
-      return;
-    }
-    if (username === 'admin' && password === 'admin') {
-      alert('Logged in successfully');
-    }
-    console.log('Login submitted:', { username, password });
-  };
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 to-green-100">
-      <Card className="w-full max-w-md p-6">
-        <div className="text-center mb-6">
-          <h2 className="text-2xl font-bold text-blue-700">PharmaFlow <br />-Login-</h2>
-        </div>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="relative">
-            <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-            <Input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="pl-10 border-green-300 focus:border-green-500 focus:ring-green-500"
-            />
-          </div>
-          <div className="relative">
-            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="pl-10 border-green-300 focus:border-green-500 focus:ring-green-500"
-            />
-          </div>
-          <Button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white"
-          >
-            Log In
-          </Button>
-        </form>
-        <div className="mt-4 text-center">
-          <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
-          <br />
-          <a href='#' onClick={() => setState('register')} className="text-sm text-blue-600 hover:underline">Create an account?</a>
-        </div>
-      </Card>
-    </div>
-  );
-};
-
 const RadioButton = ({ id, name, value, checked, onChange, label }) => (
   <div className="flex items-center space-x-2 p-2 rounded-md hover:bg-gray-100">
     <input
@@ -105,6 +44,8 @@ const RadioButton = ({ id, name, value, checked, onChange, label }) => (
 );
 
 const RegisterPage = ({ setState }) => {
+  console.log('RegisterPage rendering');
+
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -113,15 +54,23 @@ const RegisterPage = ({ setState }) => {
     userType: 'client',
   });
 
+  useEffect(() => {
+    console.log('RegisterPage mounted');
+    return () => console.log('RegisterPage unmounted');
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({ ...prevData, [name]: value }));
+    setFormData(prevData => {
+      console.log('Updating form data:', { ...prevData, [name]: value });
+      return {[name]: value};
+    });
+    
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle registration logic here
-    console.log('Registration submitted:', formData);
+    alert('Form submitted ${JSON.stringify(formData)}');
   };
 
   return (
@@ -137,7 +86,7 @@ const RegisterPage = ({ setState }) => {
             placeholder="Full Name"
             value={formData.fullName}
             onChange={handleChange}
-            className="border-green-300 focus:border-green-500 focus:ring-green-500"
+            className="border-gray-300 focus:border-black-500 focus:ring-black-500"
           />
           <Input
             type="email"
@@ -145,7 +94,7 @@ const RegisterPage = ({ setState }) => {
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="border-green-300 focus:border-green-500 focus:ring-green-500"
+            className="border-gray-300 focus:border-black-500 focus:ring-black-500"
           />
           <Input
             type="password"
@@ -153,7 +102,7 @@ const RegisterPage = ({ setState }) => {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
-            className="border-green-300 focus:border-green-500 focus:ring-green-500"
+            className="border-gray-300 focus:border-black-500 focus:ring-black-500"
           />
           <Input
             type="password"
@@ -161,7 +110,7 @@ const RegisterPage = ({ setState }) => {
             placeholder="Confirm Password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            className="border-green-300 focus:border-green-500 focus:ring-green-500"
+            className="border-gray-300 focus:border-black-500 focus:ring-black-500"
           />
           <div className="space-y-2">
             <p className="font-semibold text-gray-700">I am registering as a:</p>
@@ -204,14 +153,5 @@ const RegisterPage = ({ setState }) => {
     </div>
   );
 };
-
-const MainPage = ({ setState, state }) => {
-  return (
-    <>
-      {state === 'login' && <LoginPage setState={setState} />}
-      {state === 'register' && <RegisterPage setState={setState} />}
-    </>
-  );
-}
 
 export default RegisterPage;

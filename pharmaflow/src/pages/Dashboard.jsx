@@ -3,7 +3,47 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import { Clipboard, TrendingUp, Package, DollarSign, Car, TvIcon, PanelTopIcon, HomeIcon } from 'lucide-react';
 import { useState } from 'react';
 import  Dropdown from './../componements/ui/dropdown'
+import { PureComponent } from 'react';
 import {Chart} from 'react-google-charts';
+
+import { ComposableMap, Geographies, Geography } from "react-simple-maps"
+
+const geoUrl =
+  "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json"
+
+function MapChart() {
+  const geoUrl="https://raw.githubusercontent.com/mledoze/countries/442472de98e80f4a44f1028960dbb0dfb1d942fe/data/deu.topo.json";
+  
+  const data = [
+     ["Country", "Popularity"],
+  ["Germany", 200],
+  ["United States", 300],
+  ["Brazil", 400],
+  ["Canada", 500],
+  ["France", 600],
+  ["RU", 700],
+  ]
+  return (
+    <Chart
+      chartEvents={[
+        {
+          eventName: "select",
+          callback: ({ chartWrapper }) => {
+            const chart = chartWrapper.getChart();
+            const selection = chart.getSelection();
+            if (selection.length === 0) return;
+            const region = data[selection[0].row + 1];
+            console.log("Selected : " + region);
+          },
+        },
+      ]}
+      chartType="GeoChart"
+      width="100%"
+      height="100%"
+      data={data}
+    />
+  )
+}
 
 const Card = ({ title, value, icon: Icon, className }) => (
   <div className={`bg-white rounded-lg shadow p-6 flex items-center ${className}`}>
@@ -18,16 +58,18 @@ const Card = ({ title, value, icon: Icon, className }) => (
 );
 
 
-
-export const data = [
-  ["Country", "Popularity"],
-  ["Germany", 200],
-  ["United States", 300],
-  ["Brazil", 400],
-  ["Canada", 500],
-  ["France", 600],
-  ["RU", 700],
+const salesDataYearly = [
+  { years: '2017', sales: 4000 },
+  { years: '2018', sales: 3000 },
+  { years: '2019', sales: 5000 },
+  { years: '2020', sales: 4500 },
+  { years: '2021', sales: 6000 },
+  { years: '2022', sales: 5500 },
+  { years: '2023', sales: 6500 },
+  { years: '2024', sales: 7000 },
+  
 ];
+
 const salesData = [
   { month: 'Jan', sales: 4000 },
   { month: 'Feb', sales: 3000 },
@@ -54,6 +96,46 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 const ReportsPage = () => {
 
+  const data = [
+    {
+      year: '2019',
+      private: 4000,
+      public: 2400,
+      amt: 2400,
+    },
+    {
+      year: '2020',
+      private: 3000,
+      public: 1398,
+      amt: 2210,
+    },
+    {
+      year: '2021',
+      private: 2000,
+      public: 9800,
+      amt: 2290,
+    },
+    {
+      year: '2022',
+      private: 2780,
+      public: 3908,
+      amt: 2000,
+    },
+    {
+      year: '2023',
+      private: 1890,
+      public: 4800,
+      amt: 2181,
+    },
+    {
+      year: '2024',
+      private: 2390,
+      public: 3800,
+      amt: 2500,
+    },
+    
+  ];
+  
   const years=[
     {label:'all years',value:'all years'},
     {label:'2025',value:2025},
@@ -95,25 +177,46 @@ const ReportsPage = () => {
   return (
     <>
       <div className="min-h-screen bg-gray-100 p-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Admin Dashboard</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
+          <div className="flex space-x-3">
+            <a href="#" className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white-500 bg-white border border-white-300 rounded-lg hover:bg-white-100 hover:text-white-700 dark:bg-white-800 dark:border-white-700 dark:text-white-400 dark:hover:bg-white-700 bg-white-100 dark:hover:text-white">
+              <svg className="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+              </svg>
+            </a>
+            <a href="#" className="flex items-center justify-center px-3 h-8 text-sm font-medium text-white-500 bg-white border border-white-300 rounded-lg hover:bg-white-100 hover:text-white-700 dark:bg-white-800 dark:border-white-700 dark:text-white-400 dark:hover:bg-white-700 bg-white-100 dark:hover:text-gray">
+              <svg className="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+              </svg>
+            </a>
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <Dropdown options={years}  onSelect={(option)=>console.log(option)} />
-          <Dropdown options={months} onSelect={(option)=>console.log(option)} />
-          <Dropdown options={seasons} onSelect={(option)=>console.log(option)} />
-                
-
+          <Dropdown options={years} onSelect={(option) => console.log(option)} />
+          <Dropdown options={months} onSelect={(option) => console.log(option)} />
+          <Dropdown options={seasons} onSelect={(option) => console.log(option)} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          
-            
           <Card title="Total Sales" value="$1,234,567" icon={DollarSign} />
           <Card title="Products Sold" value="12,345" icon={Package} />
           <Card title="Top Product" value={TopProduct} icon={Clipboard} />
           <Card title="Top City" value={TopCity} icon={HomeIcon} />
         </div>
-        
-        
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="bg-white rounded-lg shadow p-6">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Sales Trend</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <LineChart data={salesDataYearly}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="years" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="sales" stroke="#20f885" />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Monthly Sales</h2>
             <ResponsiveContainer width="100%" height={300}>
@@ -128,33 +231,23 @@ const ReportsPage = () => {
             </ResponsiveContainer>
           </div>
           <div className="bg-white rounded-lg shadow p-6">
-            
+            <div id="countries_div" height={300} width={"100%"}></div>
           </div>
-          <div className="bg-white rounded-lg shadow p-6">
-          
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-          
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-          
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6" >
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">Sales Trend</h2>
+          <div className="bg-white rounded-lg shadow p-6 lg:col-span-1">
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Sales by Years & Channels</h2>
             <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={salesData}>
+              <BarChart width={500} height={300} data={data}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
+                <XAxis dataKey="year" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="sales" stroke="#82ca9d" />
-              </LineChart>
+                <Bar dataKey="public" fill="#8884d8" />
+                <Bar dataKey="private" fill="#82ca9d" />
+              </BarChart>
             </ResponsiveContainer>
           </div>
-
-          <div className="bg-white rounded-lg shadow p-6 lg:col-span-2">
+          <div className="bg-white rounded-lg shadow p-6 lg:col-span-1">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Product Distribution</h2>
             <div className="flex items-center justify-center">
               <ResponsiveContainer width="100%" height={300}>
@@ -178,19 +271,10 @@ const ReportsPage = () => {
               </ResponsiveContainer>
             </div>
           </div>
+          <div className="bg-white rounded-lg shadow p-6">
+            <MapChart />
+          </div>
         </div>
-      </div>
-      
-      <div className="flex justify-center mt-4 ">
-        <a href="#" className="flex items-center justify-center px-3 h-8 me-3 text-sm font-medium text-white-500 bg-white border border-white-300 rounded-lg hover:bg-white-100 hover:text-white-700 dark:bg-white-800 dark:border-white-700 dark:text-white-400 dark:hover:bg-white-700 bg-white-100 dark:hover:text-white">
-          <svg className="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-          </svg>
-        </a>
-        <a href="#" className="flex items-center justify-center px-3 h-8 me-3 text-sm font-medium text-white-500 bg-white border border-white-300 rounded-lg hover:bg-white-100 hover:text-white-700 dark:bg-white-800 dark:border-white-700 dark:text-white-400 dark:hover:bg-white-700 bg-white-100 dark:hover:text-gray">          <svg className="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-          </svg>
-        </a>
       </div>
     </>
   );

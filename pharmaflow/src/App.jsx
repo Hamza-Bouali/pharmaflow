@@ -7,10 +7,10 @@ import React,{useState} from 'react';
 import OrderManagement from './pages/OrderManagement';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import FinancialReportsPage from './pages/Reports';
-
-import RegisterPage from './pages/LoginRegister';
+import LoginPage from './pages/Login';
+import RegisterPage from './pages/Register';
 const App=()=>{
-    let [page,setPage]=useState('Login');
+    
     let [state,setState]=useState(false);
     
     
@@ -19,12 +19,12 @@ const App=()=>{
     return (
         <>
         <Router>
-        <Nav setPage={setPage}/>
+        <Nav />
         
         <div className="max-w-10xl mx-auto">
           <Routes>
           
-            <Route path="/" element={<RegisterPage setPage={setState}/>} />
+            <Route path="/" element={state ? <LoginPage setState={setState}/> : <RegisterPage setState={setState}/>} />
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/inventory" element={<Inventory />} />
             <Route path="/forecast" element={<StockForecasting />} />
