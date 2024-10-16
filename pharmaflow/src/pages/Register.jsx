@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Lock, User } from 'lucide-react';
+import {useDispatch,useSelector} from 'react-redux';
 
 const Card = ({ children, className }) => (
   <div className={`bg-white shadow-lg rounded-lg ${className}`}>
@@ -43,7 +44,7 @@ const RadioButton = ({ id, name, value, checked, onChange, label }) => (
   </div>
 );
 
-const RegisterPage = ({ setState }) => {
+const RegisterPage = () => {
   console.log('RegisterPage rendering');
 
   const [formData, setFormData] = useState({
@@ -53,6 +54,13 @@ const RegisterPage = ({ setState }) => {
     confirmPassword: '',
     userType: 'client',
   });
+  const dispatch=useDispatch();
+
+  
+
+  useEffect(() => {dispatch({type:'signup'});},[dispatch]);
+
+
 
   useEffect(() => {
     console.log('RegisterPage mounted');
@@ -147,7 +155,7 @@ const RegisterPage = ({ setState }) => {
           </Button>
         </form>
         <div className="mt-4 text-center">
-          <a href="#" onClick={() => setState('login')} className="text-sm text-blue-600 hover:underline">Already have an account? Log in</a>
+          <a href="#" onClick={() => {}} className="text-sm text-blue-600 hover:underline">Already have an account? Log in</a>
         </div>
       </Card>
     </div>

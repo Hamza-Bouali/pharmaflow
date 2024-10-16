@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, ComposedChart } from 'recharts';
 import { Clipboard, TrendingUp, Package, DollarSign, Home } from 'lucide-react';
 import Dropdown from './../componements/ui/dropdown';
 import { ComposableMap, Geographies, Geography, ZoomableGroup } from "react-simple-maps";
@@ -16,6 +16,88 @@ const Card = ({ title, value, icon: Icon, className }) => (
     </div>
   </div>
 );
+
+
+const generateData = (count) => {
+  return Array.from({ length: count }, (_, index) => ({
+    id: index + 1,
+    name: `Item ${index + 1}`,
+    description: `Description for item ${index + 1}`,
+    value: Math.floor(Math.random() * 1000)
+  }));
+};
+
+
+const ScrollableTable = () => {
+  const data = generateData(100); // Generate 100 items
+
+  const scrollbarStyles = {
+    '&::-webkit-scrollbar': {
+      width: '10px',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: '#f1f1f1',
+      borderRadius: '5px',
+    },
+    '::-webkit-scrollbar-thumb': {
+      background: '#888',
+      borderRadius: '50px',
+    },
+    '&::-webkit-scrollbar-thumb:hover': {
+      background: '#555',
+    },
+    scrollbarWidth: 'thin',
+    scrollbarColor: '#888 #f1f1f1',
+  };
+
+
+
+  return (
+    
+
+<div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-900 uppercase dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Product name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Category
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white dark:bg-gray-800">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    Apple MacBook Pro 17"
+                </th>
+                <td class="px-6 py-4">
+                    Silver
+                </td>
+                <td class="px-6 py-4">
+                    Laptop
+                </td>
+                <td class="px-6 py-4">
+                    $2999
+                </td>
+            </tr>
+            
+            
+        </tbody>
+    </table>
+</div>
+
+  );
+};
+
+
 
 const salesDataYearly = [
   { years: '2017', sales: 4000 },
@@ -79,6 +161,38 @@ const MonthlySales = ({ state ,n}) => {
   );
 };
 
+
+
+
+const TopCustomers = () => {
+  const data = [
+    { name: 'Hopital militaire', value: 900 },
+    { name: 'Clinique akdital', value: 550 },
+    { name: 'C', value: 200 },
+    { name: 'D', value: 278 },
+    { name: 'E', value: 189 },
+  ];
+  return (
+  <BarChart
+    layout="vertical"
+    width={500}
+    height={300}
+    data={data}
+    margin={{
+      top: 5, right: 30, left: 20, bottom: 5,
+    }}
+  >
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis type="number" />
+    <YAxis dataKey="name" type="category" />
+    <Tooltip />
+    <Legend />
+    <Bar dataKey="value" fill="#8884d8" />
+  </BarChart>
+  );
+};
+
+
 const YearlySales = ({ state ,n}) => {
   if (!state) return null;
   return (
@@ -101,6 +215,7 @@ const YearlySales = ({ state ,n}) => {
 const SeasonSales = ({ state,n }) => {
   if (!state) return null;
   return (
+    <>
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Sales Trend</h2>
       <ResponsiveContainer width="100%" height={300}>
@@ -114,45 +229,12 @@ const SeasonSales = ({ state,n }) => {
         </BarChart>
       </ResponsiveContainer>
     </div>
+    <></>
+    </>
   );
 };
 
 
-const MapChart = () => {
-  const data = [
-    ["Country", "Popularity"],
-    ["Germany", 200],
-    ["United States", 300],
-    ["Brazil", 400],
-    ["Canada", 500],
-    ["France", 600],
-    ["RU", 700],
-  ];
-
-  return (
-    <Chart
-      chartEvents={[
-        {
-          eventName: "select",
-          callback: ({ chartWrapper }) => {
-            const chart = chartWrapper.getChart();
-            const selection = chart.getSelection();
-            if (selection.length === 0) return;
-            const region = data[selection[0].row + 1];
-            console.log("Selected : " + region);
-          },
-        },
-      ]}
-      chartType="GeoChart"
-      width="100%"
-      height="400px"
-      data={data}
-  >
-    
-    </Chart>
-
-  );
-};
 
 const ReportsPage = () => {
   const [topCity, setTopCity] = useState('New York');
@@ -212,7 +294,15 @@ const ReportsPage = () => {
     { year: '2023', private: 1890, public: 4800 },
     { year: '2024', private: 2390, public: 3800 },
   ];
-
+  const data = [
+    ["Country", "Popularity"],
+    ["Germany", 200],
+    ["United States", 300],
+    ["Brazil", 400],
+    ["Canada", 500],
+    ["France", 600],
+    ["RU", 700],
+  ];
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="flex justify-between items-center mb-8">
@@ -281,10 +371,15 @@ const ReportsPage = () => {
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="bg-white rounded-lg shadow p-6 lg:col-span-1">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">Global Sales Distribution</h2>
-          <MapChart />
+        <div className="bg-white rounded-lg shadow p-6 ">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4" >Top Customers</h2>
+          <TopCustomers />
         </div>
+        <div className="bg-white rounded-lg shadow p-6 lg:row-span-1 lg:col-span-2">
+          <h2 className="text-xl font-semibold text-gray-800 mb-4">Global Sales Distribution</h2>
+          <ScrollableTable/>
+        </div>
+        
       </div>
     </div>
   );

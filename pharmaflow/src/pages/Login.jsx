@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {Link } from 'react-router-dom';
 import { Lock, LogIn, User } from 'lucide-react';
+import { useDispatch,useSelector } from 'react-redux';
+
 
 const Card = ({ children, className }) => (
   <div className={`bg-white shadow-lg rounded-lg ${className}`}>
@@ -27,7 +29,7 @@ const Button = ({ children, type = 'button', className }) => (
   </button>
 );
 
-const LoginPage = ({ setState }) => {
+const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -81,7 +83,7 @@ const LoginPage = ({ setState }) => {
         <div className="mt-4 text-center">
           <a href="#" className="text-sm text-blue-600 hover:underline">Forgot password?</a>
           <br />
-          <a href='#' onClick={() => setState(false)} className="text-sm text-blue-600 hover:underline">Create an account?</a>
+          <a href='#' onClick={() => console.log("login")} className="text-sm text-blue-600 hover:underline">Create an account?</a>
         </div>
       </Card>
     </div>
